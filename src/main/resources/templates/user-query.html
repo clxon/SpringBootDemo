@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="//unpkg.zhimg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css" />
+    <script src="//unpkg.zhimg.com/jquery@2.1.1/dist/jquery.min.js"></script>
+    <script src="//unpkg.zhimg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <title>Query</title>
+</head>
+<body>
+<div class="text-center">
+    <h5>Blog :
+        <a href="/">Index</a> |
+        <a href="/user/login">Login</a> |
+        <a href="/user/changePassword">ChangePassword</a> |
+        <a href="/user/register">Register</a> |
+        <a href="/user/logout">Logout</a>
+    </h5>
+</div> <hr/>
+<div class="text-center">
+    {% for user in users %}
+    <p class="text-danger">Id : {{ user.id }}</p>
+    <p class="text-success">Name : {{ user.name }}</p>
+    <p class="text-warning">Password : {{ user.password }}</p>
+    <br />
+    {% endfor %}
+</div>
+</body>
+</html>
