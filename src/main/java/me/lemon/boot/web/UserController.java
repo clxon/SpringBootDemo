@@ -37,12 +37,9 @@ public class UserController {
         User user = new User();
         user.setName(name);
         user.setPassword(password);
-        List<User> users = userMapper.findAll();
-        for (User u : users) {
-            if (u.getName().equals(name)) {
-                model.addAttribute("message","Register Failed!The user is exists!");
-                return "message";
-            }
+        if (userMapper.findByName(user.getName()) != null) {
+            model.addAttribute("message","Register Failed!The user is exists!");
+            return "message";
         }
         userMapper.insert(user);
         model.addAttribute("message","Register Success!");
@@ -100,5 +97,27 @@ public class UserController {
     public String logout(HttpSession session) {
         session.removeAttribute("username");
         return "redirect:/";
+    }
+
+    @GetMapping("delete")
+    public String deletePage() {
+        return "user-delete";
+    }
+
+    @PostMapping("delete")
+    public String delete(Model model,
+                         HttpSession session,
+                         @RequestParam("username") String name,
+                         @RequestParam("password") String password) {
+        List<User> users = userMapper.findAll();
+        for (User u : users) {
+            if (u.getName().equals(name) && u.getPassword().equals(password)) {
+                userMapper.deleteById(u);
+                model.addAttribute("message","Your user is gone.Bye Bye!");
+                return "message";
+            }
+        }
+        model.addAttribute("message", "Delete Failed!You lie to me!");
+        return "message";
     }
 }
